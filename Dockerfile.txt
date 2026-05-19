@@ -1,0 +1,18 @@
+# Usamos una imagen ligera de Python como base
+FROM python:3.10-slim
+
+# Configuramos el directorio de trabajo dentro del contenedor
+WORKDIR /app
+
+# Copiamos los archivos locales al contenedor
+COPY main.py /app/main.py
+COPY omnicheck.db /app/omnicheck.db
+
+# Instalamos las librerías necesarias
+RUN pip install --no-cache-dir fastapi uvicorn
+
+# Exponemos el puerto que usará FastAPI
+EXPOSE 8000
+
+# Comando para arrancar la API dentro de Render
+CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]
